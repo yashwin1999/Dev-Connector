@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const connectDB = require('./config/db');
 
 const app = express();
@@ -9,6 +10,14 @@ connectDB();
 
 // Init Middleware
 app.use(express.json());
+
+// CORS - allow frontend (set FRONTEND_URL in Render to your Vercel URL)
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || '*',
+    credentials: true
+  })
+);
 
 // Health check endpoint
 app.get('/', (req, res) => {
