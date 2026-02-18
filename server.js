@@ -10,6 +10,11 @@ connectDB();
 // Init Middleware
 app.use(express.json());
 
+// Health check endpoint
+app.get('/', (req, res) => {
+  res.json({ message: 'DevConnector API is running' });
+});
+
 // Define Routes
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/auth', require('./routes/api/auth'));
