@@ -63,15 +63,17 @@ export const login = (email, password) => async dispatch => {
 
     dispatch(loadUser());
   } catch (err) {
-    const errors = err.response.data.errors;
+    // Safely extract errors from response or fallback to generic message
+    const errors = err.response && err.response.data && err.response.data.errors;
 
     if (errors) {
       errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    } else {
+      const msg = (err.response && err.response.data && err.response.data.msg) || err.message || 'Login failed';
+      dispatch(setAlert(msg, 'danger'));
     }
 
-    dispatch({
-      type: LOGIN_FAIL
-    });
+    dispatch({ type: LOGIN_FAIL });
   }
 };
 
