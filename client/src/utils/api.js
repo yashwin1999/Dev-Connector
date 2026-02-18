@@ -2,8 +2,12 @@ import axios from 'axios';
 import store from '../store';
 import { LOGOUT } from '../actions/types';
 
+const baseURL = process.env.REACT_APP_API_URL
+  ? `${process.env.REACT_APP_API_URL.replace(/\/+$/, '')}/api`
+  : '/api';
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL,
   headers: {
     'Content-Type': 'application/json'
   }
